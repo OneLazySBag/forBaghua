@@ -19,20 +19,24 @@
     </style>
 </head>
 <body>
-    <img class="loading-screen" src="assets/redirect-loading.png" alt="Loading video">
+    <img class="loading-screen" id="first-screen" src="assets/redirect-loading.png" alt="Loading video">
     <img class="loading-screen" id="second-screen" src="assets/redirect-loading-second.png" alt="Preparing video" hidden>
     <script type="text/javascript">
         (function() {
             var targetUrl = "https://www.youtube.com/watch?v=Eq5R-eQjcQg";
             var redirectDelayMs = 500;
+            var betweenScreensDelayMs = 300;
 
             // Start the delay once the loading screen is ready to display.
             window.addEventListener("load", function() {
                 window.setTimeout(function() {
-                    document.getElementById("second-screen").hidden = false;
+                    document.getElementById("first-screen").hidden = true;
                     window.setTimeout(function() {
-                        window.location.replace(targetUrl);
-                    }, redirectDelayMs);
+                        document.getElementById("second-screen").hidden = false;
+                        window.setTimeout(function() {
+                            window.location.replace(targetUrl);
+                        }, redirectDelayMs);
+                    }, betweenScreensDelayMs);
                 }, redirectDelayMs);
             });
         })();
