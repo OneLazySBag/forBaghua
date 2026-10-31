@@ -2,26 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh"
-      content="0;url=https://www.youtube.com/watch?v=Eq5R-eQjcQg">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Loading video</title>
+    <style>
+        html, body { margin: 0; width: 100%; height: 100%; background: #000; }
+        .loading-screen { display: block; width: 100%; height: 100%; object-fit: contain; }
+    </style>
 </head>
 <body>
-    <!-- 
-      NOTE: This body is empty of content. 
-      The script below executes immediately upon loading.
-      
-      Replace the URL BELOW with your specific YouTube ID.
-    -->
+    <img class="loading-screen" src="assets/redirect-loading.png" alt="Loading video">
     <script type="text/javascript">
         (function() {
-            // CONFIGURATION: Paste your full YouTube URL here
-            var targetUrl = "https://www.youtube.com/watch?v=Eq5R-eQjcQg"; 
-            
-            // Ensure we are using a secure connection if possible, 
-            // though 'javascript:' protocol works in all browsers for redirects.
-            
-            // Redirects immediately to the YouTube video.
-            window.location.replace(targetUrl);
+            var targetUrl = "https://www.youtube.com/watch?v=Eq5R-eQjcQg";
+            var redirectDelayMs = 3000;
+
+            // Start the delay once the loading screen is ready to display.
+            window.addEventListener("load", function() {
+                window.setTimeout(function() {
+                    window.location.replace(targetUrl);
+                }, redirectDelayMs);
+            });
         })();
     </script>
 </body>
