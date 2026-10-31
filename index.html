@@ -15,10 +15,12 @@
             object-fit: cover;
             object-position: center;
         }
+        .loading-screen[hidden] { display: none; }
     </style>
 </head>
 <body>
     <img class="loading-screen" src="assets/redirect-loading.png" alt="Loading video">
+    <img class="loading-screen" id="second-screen" src="assets/redirect-loading-second.png" alt="Preparing video" hidden>
     <script type="text/javascript">
         (function() {
             var targetUrl = "https://www.youtube.com/watch?v=Eq5R-eQjcQg";
@@ -27,7 +29,10 @@
             // Start the delay once the loading screen is ready to display.
             window.addEventListener("load", function() {
                 window.setTimeout(function() {
-                    window.location.replace(targetUrl);
+                    document.getElementById("second-screen").hidden = false;
+                    window.setTimeout(function() {
+                        window.location.replace(targetUrl);
+                    }, redirectDelayMs);
                 }, redirectDelayMs);
             });
         })();
